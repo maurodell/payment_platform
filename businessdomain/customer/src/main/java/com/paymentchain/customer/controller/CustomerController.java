@@ -13,6 +13,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springdoc.core.annotations.RouterOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +34,11 @@ public class CustomerController {
     private final CustomerRepository customerRepository;
 
     private final WebClient.Builder clientBuilder;
+
+    //    @Value("${custom.activeprofilename}")
+//    private String profile;
+    @Autowired
+    private Environment env;
 
     public CustomerController(CustomerRepository customerRepository, WebClient.Builder clientBuilder) {
         this.customerRepository = customerRepository;
@@ -144,5 +152,10 @@ public class CustomerController {
                         .build())
                 .retrieve().bodyToFlux(Object.class).collectList().block();
         return transactions;
+    }
+
+    @GetMapping("/check")
+    public String check(){
+        return "Property value is: "+env.getProperty("custom.activeprofilename");
     }
 }

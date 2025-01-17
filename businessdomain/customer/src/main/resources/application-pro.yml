@@ -1,0 +1,29 @@
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+    enable: false
+
+server:
+  port: 48152
+
+custom:
+  activeprofilename: production
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    url: jdbc:h2:mem:customer
+    username: sa
+    password: 1234
+    driver-class-name: org.h2.Driver
+
+# activamos la interfaz para que me pueda conectar a esa base de datos
+  h2:
+    console:
+      enabled: true
